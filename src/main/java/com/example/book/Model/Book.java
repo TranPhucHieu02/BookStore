@@ -14,15 +14,15 @@ public class Book {
     private Long id;
 
     @Column(name = "title")
-    @NotEmpty(message = "Title must not be empty")
-    @Size(max = 50, min = 1, message = "Title must be less tuan 50 characters")
+    @NotEmpty(message = "Tên không được để trống")
+    @Size(max = 50, min = 1, message = "Tên không vượt quá 50 ký tự")
     private String title;
 
     @Column(name = "author")
     private String author;
     
     @Column(name = "price")
-    @NotNull(message = "price is required")
+    @NotNull(message = "giá không được để trống")
     private Double price;
     
     @ManyToOne

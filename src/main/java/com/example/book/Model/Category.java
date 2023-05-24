@@ -3,6 +3,8 @@ package com.example.book.Model;
 import java.util.List;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="category")
@@ -10,8 +12,13 @@ public class Category{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name="name")
+    @NotEmpty(message = "Tên không được để trống")
+    @Size(max = 50, min = 1, message = "Tên không vượt quá 50 ký tự")
     private String name;
+
+    
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
     private List<Book> books;
     public Long getId() {

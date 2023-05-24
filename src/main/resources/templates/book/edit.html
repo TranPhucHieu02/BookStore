@@ -11,19 +11,19 @@
         <h1 th:text="${title}"></h1>
         <form th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
             <div class="col-6 mb-3">
-                <label class="form-control" for="title">Title:</label>
+                <label class="form-label" for="title">Title:</label>
                 <input class="form-control" type="text" th:field="*{title}" id="title">
             </div>
             <div class="col-6 mb-3">
-                <label class="form-control" for="title">Author:</label>
+                <label class="form-label" for="title">Author:</label>
                 <input class="form-control" type="text" th:field="*{author}" id="author">
             </div>
             <div class="col-6 mb-3">
-                <label class="form-control" for="title">Price:</label>
+                <label class="form-label" for="title">Price:</label>
                 <input class="form-control" type="text" th:field="*{price}" id="price">
             </div>
             <div class="col-6 mb-3">
-                <label class="form-control" for="title">Category:</label>
+                <label class="form-label" for="title">Category:</label>
                 <select class="form-control" id="category" name="category.id">
                     <option th:value="${book.category.id}" th:text="${book.category.name}"></option>
                     <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option> 
