@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Category List</title>
+    <th:block th:replace="layout :: link-css"></th:block>
+  </head>
+  <body>
+    <th:block th:replace="layout :: header"></th:block>
+    <div class="container">
+      <h1 th:text="${title}"></h1>
+      <form th:action="@{/category/add}" th:object="${categories}" method="post">
+        <div class="col-6 mb-3">
+          <label class="form-label" for="title">Name:</label>
+          <input class="form-control" type="text" name="name" id="name">
+          <!-- <input class="form-control" type="text" th:field="*{name}" id="name"> -->
+        </div>
+        <input type="submit" class="btn btn-primary" value="Save" />
+      </form>
+      <br />
+      <a th:href="@{/category}">Back to list</a>
+    </div>
+    <th:block th:replace="layout :: footer"></th:block>
+  </body>
+</html>
