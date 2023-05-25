@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.book.Model.Book;
 import com.example.book.Model.Category;
 import com.example.book.Services.CategoryService;
 
 import jakarta.validation.Valid;
 @Controller
-@RequestMapping("/category")
+@RequestMapping("/categories")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
@@ -33,7 +32,7 @@ public class CategoryController {
 
     @GetMapping("/add")
     public String addBookForm(Model model) {
-        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("categories", new Category());
         model.addAttribute("title", "Add Category");
         return "category/add";
     }
@@ -41,14 +40,13 @@ public class CategoryController {
     @PostMapping("/add")
     public String addBook(@Valid @ModelAttribute("categories") Category category, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("categories", categoryService.getAllCategories());
             model.addAttribute("categories", category);
             model.addAttribute("title", "Add Category");
             return "category/add";
         }
 
         categoryService.addCategory(category);
-        return "redirect:/category";
+        return "redirect:/categories";
     }
 
     @GetMapping("/edit/{id}")
@@ -57,7 +55,7 @@ public class CategoryController {
         model.addAttribute("categories", categoryService.getAllCategories());
         Category editCategory = categoryService.getCategoryById(id);
         if (editCategory != null) {
-            model.addAttribute("book", editCategory);
+            model.addAttribute("categories", editCategory);
             return "category/edit";
 
         } else {
@@ -66,14 +64,19 @@ public class CategoryController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editBook(@PathVariable("id") Long id, @ModelAttribute("category") Category category) {
+    public String editBook(@Valid @ModelAttribute("categories") Category category,BindingResult bindingResult,Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", category);
+            model.addAttribute("title", "Edit Category");
+            return "category/edit";
+        }
         categoryService.updateCategory(category);
-        return "redirect:/category";
+        return "redirect:/categories";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable("id") Long id) {
         categoryService.deleteCategory(id);
-        return "redirect:/category";
+        return "redirect:/categories";
     }
 }

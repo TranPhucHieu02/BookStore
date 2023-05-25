@@ -70,7 +70,13 @@ public class BookController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editBook(@PathVariable("id") Long id, @ModelAttribute("book") Book book) {
+    public String editBook( @PathVariable("id") Long id,@Valid @ModelAttribute("book") Book book,BindingResult bindingResult,Model model) {
+        if(bindingResult.hasErrors()){
+            model.addAttribute("categories", categoryService.getAllCategories());
+            model.addAttribute("book", book);
+            model.addAttribute("title", "Edit Book");
+            return "book/edit";
+        }
         bookService.updateBook(book);
         return "redirect:/books";
     }

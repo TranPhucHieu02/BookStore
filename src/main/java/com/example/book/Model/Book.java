@@ -14,15 +14,16 @@ public class Book {
     private Long id;
 
     @Column(name = "title")
-    @NotEmpty(message = "Tên không được để trống")
+    @NotEmpty(message = "title không được để trống")
     @Size(max = 50, min = 1, message = "Tên không vượt quá 50 ký tự")
     private String title;
 
     @Column(name = "author")
+    @NotEmpty(message = "author không được để trống")
     private String author;
     
     @Column(name = "price")
-    @NotNull(message = "giá không được để trống")
+    @NotNull(message = "price không được để trống")
     private Double price;
     
     @ManyToOne

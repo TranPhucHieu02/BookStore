@@ -19,8 +19,8 @@
                 <td th:text="${category.id}"></td>
                 <td th:text="${category.name}"></td>
                 <td>
-                    <a th:href="@{/category/edit/{id}(id=${category.id})}">Edit</a>|
-                    <a th:href="@{/category/delete/{id}(id=${category.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                    <a th:href="@{/categories/edit/{id}(id=${category.id})}">Edit</a>|
+                    <a th:href="@{/categories/delete/{id}(id=${category.id})}" onclick="return confirm('Are you sure?')">Delete</a>
                 </td>
             </tr>
         </table>
