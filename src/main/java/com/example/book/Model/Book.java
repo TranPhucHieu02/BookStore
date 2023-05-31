@@ -2,6 +2,7 @@ package com.example.book.Model;
 
 
 import com.example.book.Validator.annotation.ValidCategoryId;
+import com.example.book.Validator.annotation.ValidUserId;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -30,6 +31,11 @@ public class Book {
     @JoinColumn(name = "category_id")
     @ValidCategoryId
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ValidUserId
+    private User user;
 
     public Long getId() {
         return id;
