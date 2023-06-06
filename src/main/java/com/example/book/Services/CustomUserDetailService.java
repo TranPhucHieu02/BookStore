@@ -12,12 +12,13 @@ import com.example.book.Repository.IUserRepository;
 public class CustomUserDetailService implements UserDetailsService {
     @Autowired
     private IUserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername (username) ;
+        User user = userRepository.findByUsername(username);
         if (user == null)
-        throw new UsernameNotFoundException("User not found");
-        return new CustomUserDetail(user, userRepository) ;
+            throw new UsernameNotFoundException("User not found");
+        return new CustomUserDetail(user, userRepository);
     }
     
 }

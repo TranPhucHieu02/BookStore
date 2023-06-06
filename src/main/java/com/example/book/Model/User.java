@@ -1,7 +1,12 @@
 package com.example.book.Model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.example.book.Validator.annotation.ValidUsername;
 
@@ -17,27 +22,32 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", length=50,nullable = false, unique = true)
+    @Column(name = "username", length = 50, nullable = false, unique = true)
     @NotEmpty(message = "username không được để trống")
     @Size(max = 50, message = "Tên không vượt quá 50 ký tự")
     @ValidUsername
     private String username;
 
-    @Column(name = "password",length = 205, nullable = false)
+    @Column(name = "password", length = 205, nullable = false)
     @NotEmpty(message = "password không được để trống")
     private String password;
 
-    @Column(name = "email" ,length = 50)
+    @Column(name = "email", length = 50)
     @NotNull(message = "email không được để trống")
     @Size(max = 50, message = "email không vượt quá 50 ký tự")
     private String email;
-    
-    @Column(name = "name" ,nullable = false)
+
+    @Column(name = "name", nullable = false)
     @NotNull(message = "name không được để trống")
     private String name;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Book> books =new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Book> books = new ArrayList<>();
+
+    @Fetch(FetchMode.JOIN)
+    @ManyToMany()
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<role> roles = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -45,6 +55,9 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User() {
     }
 
     public String getUsername() {
@@ -87,20 +100,13 @@ public class User {
         this.books = books;
     }
 
-    public User() {
+    public Set<role> getRoles() {
+        return roles;
     }
 
-    public User(Long id,
-            @NotEmpty(message = "username không được để trống") @Size(max = 50, message = "Tên không vượt quá 50 ký tự") String username,
-            @NotEmpty(message = "password không được để trống") String password,
-            @NotNull(message = "email không được để trống") @Size(max = 50, message = "email không vượt quá 50 ký tự") String email,
-            @NotNull(message = "name không được để trống") String name, List<Book> books) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.name = name;
-        this.books = books;
+    public void setRoles(Set<role> roles) {
+        this.roles = roles;
     }
+
     
 }

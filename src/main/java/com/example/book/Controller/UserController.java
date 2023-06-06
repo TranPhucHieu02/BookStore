@@ -3,6 +3,8 @@ package com.example.book.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +25,10 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/login")
-    public String login() {
-
+    public String login(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+                return "redirect:/books";
+        }
         return "user/login";
     }
 
@@ -42,7 +46,7 @@ public class UserController {
                 model.addAttribute(error.getField() + "_error",
                         error.getDefaultMessage());
             }
-            return "user/register";
+            return "redirect:/books";
         }
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userService.save(user);
